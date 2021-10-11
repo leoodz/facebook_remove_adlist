@@ -1,0 +1,20 @@
+name: FB Adlist Remover
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  FBAdlistRemover:
+    name: Remove Adlist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove
+        env:
+          FB_EMAIL: ${{ secrets.FB_EMAIL }}
+          FB_APP_PASSWORD: ${{ secrets.FB_APP_PASSWORD }}
+        run: |
+          docker run --rm --pull always \
+            --env "FB_EMAIL=$FB_EMAIL" \
+            --env "FB_APP_PASSWORD=$FB_APP_PASSWORD" \
+            ghcr.io/jackblk/fb-adlist-remover:latest all
